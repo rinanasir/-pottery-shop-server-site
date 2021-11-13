@@ -18,6 +18,10 @@ async function run() {
     try {
         await client.connect();
         // console.log('connected successfully');
+        const database = client.db('clayware_pottery');
+
+        // database for users
+        const userCollection = database.collection('users');
     }
     finally {
         // await client.close();
