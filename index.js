@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 
 const port = process.env.PORT || 5000;
 
@@ -20,8 +21,33 @@ async function run() {
         // console.log('connected successfully');
         const database = client.db('clayware_pottery');
 
-        // database for users
+        // collection for products
+        const productCollection = database.collection('products');
+
+        // collection for users
         const userCollection = database.collection('users');
+
+        // GET api for all products
+        app.get('/products', async (req, res) => {
+            const cursor = productCollection.find({});
+            const products = await cursor.toArray();
+            res.send(products);
+        })
+        // GET api for single product
+        app.get('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log('single product', id);
+            const query = { _id: ObjectId(id) };
+            const product = await productCollection.findOne(query);
+            res.json(product);
+        })
+        // POST api for products
+        app.post('/products', async (req, res) => {
+            const product = req.body;
+            const result = await productCollection.insertOne(product);
+            console.log(result);
+            res.json(result);
+        })
     }
     finally {
         // await client.close();
