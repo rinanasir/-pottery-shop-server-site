@@ -46,6 +46,13 @@ async function run() {
             // console.log(result);
             res.json(result);
         });
+        // DElETE api to remove a product
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await productCollection.deleteOne(query);
+            res.json(result);
+        });
 
         // POST api for users
         app.post('/users', async (req, res) => {
