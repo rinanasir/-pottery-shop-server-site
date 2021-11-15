@@ -1,6 +1,6 @@
 # Clayware
 
-Clayware server site [Clayware]().
+Clayware server site [Clayware](http).
 
 # About This Server Repository
 1. This server site is build with node.js mongodb and express.
