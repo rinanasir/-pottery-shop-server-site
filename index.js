@@ -56,7 +56,22 @@ async function run() {
             res.json(result);
         });
 
-        // POST order
+        // Get order according to user
+        app.get('/orders', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            console.log(email);
+            const cursror = orderCollection.find(query);
+            const order = await cursror.toArray();
+            res.json(order);
+        });
+        // GET api for all orders
+        app.get('/orders', async (req, res) => {
+            const cursor = orderCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);
+        });
+        // POST order from the user
         app.post('/orders', async (req, res) => {
             const order = req.body;
             // console.log(order);
