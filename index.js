@@ -24,6 +24,8 @@ async function run() {
         const productCollection = database.collection('products');
         // collection for users
         const userCollection = database.collection('users');
+        // collection for ordered product
+        const orderCollection = database.collection('orders');
 
         // GET api for all products
         app.get('/products', async (req, res) => {
@@ -51,6 +53,15 @@ async function run() {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await productCollection.deleteOne(query);
+            res.json(result);
+        });
+
+        // POST order
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            // console.log(order);
+            const result = await orderCollection.insertOne(order);
+            // console.log(result);
             res.json(result);
         });
 
